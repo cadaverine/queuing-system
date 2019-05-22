@@ -72,9 +72,12 @@ export default {
 
 <style lang="scss">
 .request {
-  width: 67px;
+  width: 45px;
   height: 23px;
   position: absolute;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  border: 2px solid #777;
+  border-radius: 5px;
 }
 
 .request__header {
