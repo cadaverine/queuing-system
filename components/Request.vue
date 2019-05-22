@@ -8,22 +8,23 @@
       {{ type }}
     </div>
     <div class="request__loader">
-      <transition
-        name="loading"
-        @after-enter="stopLoading"
-      >
-        <div
-          v-show="loadingStarted"
-          class="request__loader-line"
-        />
-      </transition>
+      <div
+        class="request__loader-line"
+        :style="widthStyles"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import { animate } from '../assets/helpers'
+
 export default {
   props: {
+    id: {
+      type: Number,
+      default: -1
+    },
     type: {
       type: String,
       default: 'XCHG',
@@ -35,13 +36,12 @@ export default {
     },
     serviceTime: {
       type: Number,
-      default: 2
+      default: 1000
     }
   },
   data() {
     return {
-      loadingStarted: false,
-      loadingStoped: false
+      serviceProgress: 0
     }
   },
   computed: {
@@ -53,11 +53,18 @@ export default {
         top: `${this.coords.top}px`,
         left: `${this.coords.left}px`
       }
+    },
+    transitionStyles() {
+      return { 'transition-duration': `${this.serviceTime}s` }
+    },
+    widthStyles() {
+      return { width: `${this.serviceProgress}%` }
     }
   },
   methods: {
-    stopLoading() {
-      this.loadingStoped = true
+    async service(duration) {
+      await animate(this, { serviceProgress: 100 }, duration)
+      this.$emit('serviced', this.id)
     }
   }
 }
@@ -86,7 +93,6 @@ export default {
 }
 
 .request__loader-line {
-  width: 100%;
   height: 100%;
   will-change: width;
   background-color: green;
@@ -109,17 +115,4 @@ export default {
     background-color: #FD5D5D;
   }
 }
-
-.loading-enter-active,
-.loading-leave-active {
-  transition-duration: 1s;
-  transition-property: width;
-  transition-timing-function: linear;
-}
-
-.loading-enter,
-.loading-leave-to {
-  width: 0%
-}
-
 </style>
