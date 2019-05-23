@@ -1,7 +1,6 @@
 <template>
   <section class="container">
     <div class="container__scene">
-      <Request />
       <RequestsQueue />
       <div
         class="container__devices-group"
@@ -19,13 +18,11 @@
 </template>
 
 <script>
-import Request from '~/components/Request.vue'
 import RequestsQueue from '~/components/RequestsQueue.vue'
 import ServiceDevice from '~/components/ServiceDevice.vue'
 
 export default {
   components: {
-    Request,
     RequestsQueue,
     ServiceDevice
   }
@@ -41,7 +38,7 @@ export default {
 
 .container__scene {
   width: 1024px;
-  height: 768px;
+  height: 495px;
   display: flex;
   justify-content: flex-end;
 }
