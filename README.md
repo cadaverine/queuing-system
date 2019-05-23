@@ -1,5 +1,7 @@
 # queuing-system
 
+[![Build Status](https://travis-ci.org/cadaverine/queuing-system.svg?branch=master)](https://travis-ci.org/cadaverine/queuing-system)
+
 Queuing System: https://cadaverine.github.io/queuing-system/
 
 ## Build Setup
