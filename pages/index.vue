@@ -39,16 +39,17 @@ export default {
 .container__scene {
   width: 1024px;
   height: 495px;
-  display: flex;
-  justify-content: flex-end;
+  position: relative;
 }
 
 .container__devices-group {
+  right: 0px;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: space-between;
   margin-top: 20px;
+  position: absolute;
 }
 
 </style>
