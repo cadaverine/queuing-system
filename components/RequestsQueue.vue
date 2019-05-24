@@ -1,11 +1,17 @@
 <template>
-  <div class="queue">
+  <div
+    class="queue"
+    :style="sizeStyles"
+  >
     <div class="queue__container">
       <Request
-        v-for="(_, index) of Array(length).fill(0)"
+        v-for="(_, index) of Array(requestNumber).fill(0)"
         :key="index"
         :type="getRandomRequestType()"
-        :coords="{ top: 3, left: 460 - index * (45 / 2) }"
+        :coords="{
+          top: 3,
+          left: width - requestSize.width - index * (requestSize.width / 2)
+        }"
       />
     </div>
   </div>
@@ -22,11 +28,37 @@ export default {
     length: {
       type: Number,
       default: 21
+    },
+    capacity: {
+      type: Number,
+      default: 20
+    },
+    requestNumber: {
+      type: Number,
+      default: 10
+    },
+    requestSize: {
+      type: Object,
+      default: () => ({ width: 45, height: 23 })
     }
   },
   data() {
     return {
       requestTypes: ['XCHG', 'CARD', 'CRED', 'ACNT']
+    }
+  },
+  computed: {
+    width() {
+      return this.requestSize.width / 2 * this.capacity
+    },
+    height() {
+      return this.requestSize.height + 5 * 2
+    },
+    sizeStyles() {
+      return {
+        width: `${this.width}px`,
+        height: `${this.height}px`
+      }
     }
   },
   methods: {
@@ -43,9 +75,7 @@ export default {
 <style lang="scss">
 .queue {
   top: 230px;
-  left: 550px;
-  width: 500px;
-  height: 33px;
+  left: 250px;
   border: 2px solid #479CFF;
   display: flex;
   position: absolute;
