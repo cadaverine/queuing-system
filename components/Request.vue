@@ -1,8 +1,9 @@
 <template>
   <div
     class="request"
-    :class="typeClass"
+    :class="[typeClass, { request_current: id === currentRequestID }]"
     :style="[positionStyles]"
+    @click="setCurrentRequestID(id)"
   >
     <div class="request__header">
       {{ type }}
@@ -17,6 +18,7 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
 import { animate } from '../assets/helpers'
 
 export default {
@@ -27,8 +29,7 @@ export default {
     },
     type: {
       type: String,
-      default: 'XCHG',
-      validator: value => ['XCHG', 'CARD', 'CRED', 'ACNT'].includes(value)
+      default: 'XCHG'
     },
     coords: {
       type: Object,
@@ -45,6 +46,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      currentRequestID: 'getCurrentRequestID'
+    }),
     typeClass() {
       return `request_type_${this.type}`
     },
@@ -62,6 +66,9 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+      'setCurrentRequestID'
+    ]),
     async service(duration) {
       await animate(this, { serviceProgress: 100 }, duration)
       this.$emit('serviced', this.id)
@@ -78,6 +85,12 @@ export default {
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
   border: 2px solid #777;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.request_current {
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.63);
+  border-color:  rgba(0, 255, 0, 1)
 }
 
 .request__header {

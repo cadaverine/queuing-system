@@ -6,6 +6,7 @@
     <div class="queue__container">
       <Request
         v-for="(_, index) of Array(requestNumber).fill(0)"
+        :id="index"
         :key="index"
         :type="getRandomRequestType()"
         :coords="{
